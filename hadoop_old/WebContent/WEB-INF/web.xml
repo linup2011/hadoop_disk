@@ -45,6 +45,12 @@
     <servlet-name>DocumentServlet</servlet-name>  
     <servlet-class>com.controller.DocumentServlet</servlet-class>  
   </servlet>  
+  <servlet>  
+    <description></description>  
+    <display-name>NewdirServlet</display-name>  
+    <servlet-name>NewdirServlet</servlet-name>  
+    <servlet-class>com.controller.NewdirServlet</servlet-class>  
+  </servlet>  
   <context-param>  
     <description>Location to store uploaded file</description>  
     <param-name>file-upload</param-name>  
@@ -75,5 +81,9 @@
   <servlet-mapping>  
     <servlet-name>DocumentServlet</servlet-name>  
     <url-pattern>/DocumentServlet</url-pattern>  
+  </servlet-mapping> 
+  <servlet-mapping>  
+    <servlet-name>NewdirServlet</servlet-name>  
+    <url-pattern>/NewdirServlet</url-pattern>  
   </servlet-mapping>  
 </web-app> 

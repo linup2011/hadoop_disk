@@ -5,8 +5,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;  
 import javax.servlet.http.HttpServlet;  
 import javax.servlet.http.HttpServletRequest;  
-import javax.servlet.http.HttpServletResponse;  
-  
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.hadoop.fs.FileStatus;  
 import org.apache.hadoop.mapred.JobConf;  
   
@@ -27,6 +28,11 @@ public class DocumentServlet extends HttpServlet {
          String filePath = new String(request.getParameter("filePath").getBytes("ISO-8859-1"),"GB2312");  
          JobConf conf = HdfsDAO.config();  
          HdfsDAO hdfs = new HdfsDAO(conf);  
+         System.out.println("filePath-----"+filePath);
+         HttpSession session = request.getSession(); 
+         session.setAttribute("dirpath", filePath); 
+         String dirpath = (String) request.getSession().getAttribute("dirpath");
+         System.out.println("dirpath-----"+dirpath);
          FileStatus[] documentList = hdfs.ls(filePath);  
          request.setAttribute("documentList",documentList);  
          request.getRequestDispatcher("document.jsp").forward(request,response);  

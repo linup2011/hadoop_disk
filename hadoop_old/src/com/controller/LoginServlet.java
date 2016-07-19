@@ -41,11 +41,14 @@ public class LoginServlet extends HttpServlet {
             //用户合法，跳转到界面  
             HttpSession session = request.getSession();   
             session.setAttribute("username", username);  
+            session.setAttribute("dirpath", "/"+username); 
+            String dirpath = (String) request.getSession().getAttribute("dirpath"); 
+            System.out.println("dirpath:"+dirpath+"");
               
             JobConf conf = HdfsDAO.config();  
             HdfsDAO hdfs = new HdfsDAO(conf);  
-           // FileStatus[] list = hdfs.ls("/"+username);
-            FileStatus[] list = hdfs.ls("/");  
+            FileStatus[] list = hdfs.ls("/"+username);
+            //FileStatus[] list = hdfs.ls("/");  
             request.setAttribute("list",list);  
             request.getRequestDispatcher("index.jsp").forward(request, response);  
         }else{  

@@ -25,12 +25,15 @@ public class DeleteFileServlet extends HttpServlet {
    
           
         String filePath = new String(request.getParameter("filePath").getBytes("ISO-8859-1"),"GB2312");  
+        String dirpath = (String) request.getSession().getAttribute("dirpath");
           
         JobConf conf = HdfsDAO.config();  
         HdfsDAO hdfs = new HdfsDAO(conf);  
         hdfs.rmr(filePath);  
         System.out.println("===="+filePath+"====");  
-         FileStatus[] list = hdfs.ls("/");  
+        String username = (String) request.getSession().getAttribute("username");
+        //FileStatus[] list = hdfs.ls("/" + username);  
+        FileStatus[] list = hdfs.ls(dirpath);  
         request.setAttribute("list",list);  
         request.getRequestDispatcher("index.jsp").forward(request,response);  
           

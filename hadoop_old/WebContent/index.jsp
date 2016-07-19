@@ -1,7 +1,22 @@
 <%@ include file="head.jsp"%>  
  <%@ page language="java" contentType="text/html; charset=UTF-8"  
     pageEncoding="UTF-8"%>   
-<%@page import="org.apache.hadoop.fs.FileStatus"%>      
+<%@page import="org.apache.hadoop.fs.FileStatus"%>    
+
+<script type="text/javascript">
+function diag()
+{
+    var str=prompt("输入文件夹名称");
+    if(str)
+    {
+        alert("您刚输入的是："+ str)
+    }
+    document.submitForm.dirname.value=str;
+    document.submitForm.submit();
+    //HttpRequest.setParameter("dirname",str);
+}
+
+</script>  
       
 <body style="text-align:center;margin-bottom:100px;">  
          <div class="navbar" >  
@@ -16,6 +31,12 @@
        </div>  
          
        <div style="margin:0px auto; text-align:left;width:1200px; height:50px;">  
+       <form name="submitForm" class="form-inline"  method="POST"   action="NewdirServlet" >
+           <div style="line-height:50px;float:left;">
+              <input type="submit" name="submit" value="新建文件夹" onclick="diag()"  />
+              <input type="hidden" name="dirname" value="tmp"/>
+           </div>
+       </form>
        <form class="form-inline"  method="POST"  enctype="MULTIPART/FORM-DATA"   action="UploadServlet" >  
            <div style="line-height:50px;float:left;">  
               <input type="submit" name="submit" value="上传文件"  />  
@@ -35,7 +56,11 @@
              
             <table class="table table-hover" style="width:1000px;margin-left:100px;">  
                 <tr style=" border-bottom:2px solid #ddd">  
-                    <td >文件名</td><td style="width:100px">类型</td><td style="width:100px;">大小</td><td style="width:100px;">操作</td><td style="width:100px;">操作</td>  
+                    <td >文件名</td>
+                    <td style="width:100px">类型</td>
+                    <td style="width:100px;">大小</td>
+                    <td style="width:100px;">操作</td>
+                    <td style="width:100px;">操作</td>  
                 </tr>  
                 <%  
               
@@ -54,7 +79,7 @@
                     %>  
                         <td><%= (list[i].isDir()?"目录":"文件") %></td>  
                         <td><%= list[i].getLen()/1024%></td>  
-                        <td><a href="DeleteFileServlet?filePath=<%=java.net.URLEncoder.encode(list[i].getPath().toString(),"GB2312") %>">x</a></td>  
+                        <td><a href="DeleteFileServlet?filePath=<%=java.net.URLEncoder.encode(list[i].getPath().toString(),"GB2312") %>">删除</a></td>  
                         <td><a href="DownloadServlet?filePath=<%=java.net.URLEncoder.encode(list[i].getPath().toString(),"GB2312") %>">下载</a></td>  
                       
                     </tr >  

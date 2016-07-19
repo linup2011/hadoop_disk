@@ -47,13 +47,23 @@ public class UploadServlet extends HttpServlet {
             System.out.println("source file path:"+filePath+"");  
            // 验证上传内容了类型  
            String contentType = request.getContentType();  
+         //得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
+           String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
+         //上传时生成的临时文件保存目录
+           String tempPath = this.getServletContext().getRealPath("/WEB-INF/temp");
+           File tmpFile = new File("/WEB-INF/temp");
+           if (!tmpFile.exists()) {
+        	 //创建临时目录
+        	   tmpFile.mkdir();
+           }
+           
            if ((contentType.indexOf("multipart/form-data") >= 0)) {  
   
               DiskFileItemFactory factory = new DiskFileItemFactory();  
               // 设置内存中存储文件的最大值  
               factory.setSizeThreshold(maxMemSize);  
               // 本地存储的数据大于 maxMemSize.  
-              factory.setRepository(new File("c:\\temp"));  
+              factory.setRepository(tmpFile);  
   
               // 创建一个新的文件上传处理程序  
               ServletFileUpload upload = new ServletFileUpload(factory);  
@@ -94,15 +104,16 @@ public class UploadServlet extends HttpServlet {
                       
                     System.out.println("begin to upload file to hadoop hdfs</p>");   
                     //将tomcat上的文件上传到hadoop上  
-                    String username = (String) request.getSession().getAttribute("username");  
+                    //String username = (String) request.getSession().getAttribute("username");  
+                    String dirpath = (String) request.getSession().getAttribute("dirpath");
                     JobConf conf = HdfsDAO.config();  
                     HdfsDAO hdfs = new HdfsDAO(conf);  
-                    hdfs.copyFile(filePath+"/"+fn, "/"+username+"/"+fn);  
+                    hdfs.copyFile(filePath+"/"+fn, dirpath+"/"+fn);  
                     System.out.println("upload file to hadoop hdfs success!");  
                      
-                    System.out.println("username-----"+username);  
-                    FileStatus[] list = hdfs.ls("/");  
-                     request.setAttribute("list",list);  
+                    System.out.println("dirpath-----"+dirpath);  
+                    FileStatus[] list = hdfs.ls(dirpath);  
+                    request.setAttribute("list",list);  
                     request.getRequestDispatcher("index.jsp").forward(request, response);  
                       
                     }  
