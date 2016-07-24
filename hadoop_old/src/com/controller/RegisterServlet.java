@@ -18,7 +18,7 @@ import com.model.*;
 /** 
  * Servlet implementation class ListServlet 
  */  
-public class LoginServlet extends HttpServlet {  
+public class RegisterServlet extends HttpServlet {  
    
   
     /** 
@@ -37,27 +37,11 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");  
   
         UserBeanCl ubc = new UserBeanCl();  
-        if(ubc.checkUser(username, password)){  
-            //用户合法，跳转到界面  
-            HttpSession session = request.getSession();   
-            session.setAttribute("username", username);  
-            session.setAttribute("dirpath", "/"+username); 
-            String dirpath = (String) request.getSession().getAttribute("dirpath"); 
-            System.out.println("dirpath:"+dirpath+"");
-//            String filePath = new String("/"+username);
-//            session.setAttribute("dirpath", filePath);
-            response.sendRedirect( "/hadoop_old/IndexServlet"); 
-//            JobConf conf = HdfsDAO.config();  
-            //HdfsDAO hdfs = new HdfsDAO(conf);  
-            //String filePath = new String("/"+uesrname);
-            //session.setAttribute("dirpath", filePath);
-            //FileStatus[] list = hdfs.ls("/"+username);
-            //FileStatus[] list = hdfs.ls("/");  
-            //request.setAttribute("list",list);  
-            //request.getRequestDispatcher("index.jsp").forward(request, response);  
+        if(ubc.addUser(username, password)){ 
+            request.getRequestDispatcher("login.jsp").forward(request, response);  
         }else{  
             //用户不合法，调回登录界面，并提示错误信息  
-            request.getRequestDispatcher("login.jsp").forward(request, response);  
+            request.getRequestDispatcher("register.jsp").forward(request, response);  
         }  
   
           

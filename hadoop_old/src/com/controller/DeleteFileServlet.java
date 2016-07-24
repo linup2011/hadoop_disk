@@ -32,10 +32,11 @@ public class DeleteFileServlet extends HttpServlet {
         hdfs.rmr(filePath);  
         System.out.println("===="+filePath+"====");  
         String username = (String) request.getSession().getAttribute("username");
-        //FileStatus[] list = hdfs.ls("/" + username);  
-        FileStatus[] list = hdfs.ls(dirpath);  
-        request.setAttribute("list",list);  
-        request.getRequestDispatcher("index.jsp").forward(request,response);  
+        //FileStatus[] list = hdfs.ls("/" + username); 
+        response.sendRedirect( "/hadoop_old/IndexServlet");
+        //FileStatus[] list = hdfs.ls(dirpath);  
+        //request.setAttribute("list",list);  
+        //request.getRequestDispatcher("index.jsp").forward(request,response);  
           
     }  
   

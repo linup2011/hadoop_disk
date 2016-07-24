@@ -42,12 +42,11 @@ public class NewdirServlet extends HttpServlet {
         JobConf conf = HdfsDAO.config(); 
         HdfsDAO hdfs = new HdfsDAO(conf);  
         hdfs.mkdirs(dirpath + "/" + dirname);
-        FileStatus[] list = hdfs.ls(dirpath);  
-        request.setAttribute("list",list);  
-        request.getRequestDispatcher("index.jsp").forward(request, response);  
- 
-  
-          
+        response.sendRedirect( "/hadoop_old/IndexServlet");
+        //FileStatus[] list = hdfs.ls(dirpath);  
+        //request.setAttribute("list",list);  
+        //request.getRequestDispatcher("index.jsp").forward(request, response);  
+         
        
     }  
   

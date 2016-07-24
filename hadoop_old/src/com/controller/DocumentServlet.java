@@ -34,8 +34,8 @@ public class DocumentServlet extends HttpServlet {
          String dirpath = (String) request.getSession().getAttribute("dirpath");
          System.out.println("dirpath-----"+dirpath);
          FileStatus[] documentList = hdfs.ls(filePath);  
-         request.setAttribute("documentList",documentList);  
-         request.getRequestDispatcher("document.jsp").forward(request,response);  
+         request.setAttribute("list",documentList);  
+         request.getRequestDispatcher("index.jsp").forward(request,response);  
     }  
   
     /** 

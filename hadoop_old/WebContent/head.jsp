@@ -30,7 +30,20 @@
   
   
   
-<title>Insert title here</title>  
+<title>Insert title here</title>
+<STYLE>
+   .header{ height:120px; border:2px #blue solid}
+   .body{ margin:10px auto; width:1200px}
+   .foot{ height:100px; background:#999; margin-top: 100px; text-algin:center; line-height:80px }
+   .content{ }
+   .navbox{ height:80px; }
+   .nav{ margin-left:1050px; }
+   .nav li{float:left; list-style:none; margin-left:12px; }
+   .btn{ padding:5px 12px }
+   .table{ width:100% }
+   .table tr:nth-of-type(odd){ background:#f0f2f3;}
+   .table .title{ background:beige; line-height: 2em; }
+</STYLE>
 </head>  
   
 </html>

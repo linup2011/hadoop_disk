@@ -9,7 +9,8 @@ import java.sql.Statement;
 public class UserBeanCl {  
     private Statement sm = null;  
     private Connection ct = null;  
-    private ResultSet rs = null;  
+    private ResultSet rs = null; 
+    int m=0;
       
       
     public void close(){  
@@ -76,7 +77,25 @@ public class UserBeanCl {
               
             return b;  
         }  
+        public boolean addUser(String user, String password){
+        	boolean b = true;        
+            try {
+            	//获得连接  
+                ct = new ConnDB().getConn();
+                sm = ct.createStatement();
+                m = sm.executeUpdate("insert into user values('"+user+"','"+password+"')");
+                System.out.println("m:"+m+"");
+            } catch (SQLException e) {  
+                e.printStackTrace();  
+            }finally{  
+                this.close();  
+            }
+            if (m == 0)
+            {
+            	b=false;
+            }
+
+            return b;
+        }
   
-  
-          
 }

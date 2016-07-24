@@ -111,10 +111,11 @@ public class UploadServlet extends HttpServlet {
                     hdfs.copyFile(filePath+"/"+fn, dirpath+"/"+fn);  
                     System.out.println("upload file to hadoop hdfs success!");  
                      
-                    System.out.println("dirpath-----"+dirpath);  
-                    FileStatus[] list = hdfs.ls(dirpath);  
-                    request.setAttribute("list",list);  
-                    request.getRequestDispatcher("index.jsp").forward(request, response);  
+                    response.sendRedirect( "/hadoop_old/IndexServlet"+"?filepath="+dirpath);
+                    //System.out.println("dirpath-----"+dirpath);  
+                    //FileStatus[] list = hdfs.ls(dirpath);  
+                    //request.setAttribute("list",list);  
+                    //request.getRequestDispatcher("index.jsp").forward(request, response);  
                       
                     }  
                  }  
